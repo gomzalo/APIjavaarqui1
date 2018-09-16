@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import twitter.twitter4j;
 
 @Path("/")
 public class ApiService {
@@ -17,7 +18,8 @@ public class ApiService {
  @Path("{estadoPiscina}")
  public String estadoPiscina(@PathParam("estadoPiscina") int estadoPiscina) throws IOException {
 	 String fcmNotification;
-	 String estadoPiscinaS = null;
+	 String estadoPublicacionTweet;
+	 String estadoPiscinaS;
 	 
 	 if(estadoPiscina == 1) 
 		{
@@ -33,6 +35,9 @@ public class ApiService {
 		}
 	 
 	 fcmNotification = ApplicationClass.fcm(estadoPiscinaS);
-	 return "El estado es: " +  estadoPiscina + ". \nSe envio a FCM: \n" + fcmNotification;
+	 System.out.println(estadoPiscinaS);
+	 estadoPublicacionTweet = twitter4j.publicarTweet(estadoPiscinaS);
+	 System.out.println(estadoPublicacionTweet);
+	 return "El estado es: " +  estadoPiscina + ". \nSe envio a FCM: \n" + fcmNotification + "\nTwitter: \n" + estadoPublicacionTweet;
  }
 }
